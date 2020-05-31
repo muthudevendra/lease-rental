@@ -9,7 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,22 +16,20 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import NavBar from '../../components/navBar';
+import NavBar from '../../components/navBar/navBar';
 import {fetchLeases, getOneLease} from './leaseAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'center',
     maxWidth: '98%',
   },
   paper: {
-    // marginTop: '20vh',
+    marginTop: '5vh',
     padding: theme.spacing(2),
-    textAlign: 'center',
-    height: '50vh',
-    maxHeight: '50vh',
+    height: '70vh',
+    maxHeight: '70vh',
     overflow: 'auto',
     color: theme.palette.text.secondary,
   },
@@ -49,14 +46,11 @@ const Lease = ({requestLease, fetchLeaseDataById, lease}) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const classes = useStyles();
 
-  // Get lease item list on page load
+  // Get lease item list on initial page load
   useEffect(() => {
     const getData = () => requestLease();
     getData();
-    fetchLeaseDataById('lease-a');
-  }, [requestLease, fetchLeaseDataById])
-
-  console.log(lease);
+  }, [requestLease])
 
   return (
     <React.Fragment>
@@ -67,7 +61,7 @@ const Lease = ({requestLease, fetchLeaseDataById, lease}) => {
       <Grid container className={classes.root}  spacing={2}>
         <Grid item sm={3}>
           <Paper className={classes.paper}>
-            <Typography variant="h6" className={classes.title}>
+            <Typography id={'leaseWrapper'} variant="h5" className={classes.title}>
               Leases
             </Typography>
             <List>
@@ -86,24 +80,35 @@ const Lease = ({requestLease, fetchLeaseDataById, lease}) => {
           </Paper>
         </Grid>
         <Grid item sm={7}>
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+          <TableContainer component={Paper} className={classes.paper}>
+            <Typography variant="h6" className={classes.title}>
+                Information
+            </Typography>
+            {
+              lease.selectedLease &&
+              <Typography variant="body2" className={classes.title}>
+                  Weekly rent amount: ${lease.selectedLease.rent} |
+                  Payment frequency: {lease.selectedLease.frequency} |
+                  Payment day: {lease.selectedLease.payment_day} 
+              </Typography>
+            }
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>From</TableCell>
-                  <TableCell align="right">To</TableCell>
-                  <TableCell align="right">Days</TableCell>
+                  <TableCell>To</TableCell>
+                  <TableCell align="center">Days</TableCell>
                   <TableCell align="right">Amount</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {lease.selectedLease.map(lease => (
+                {lease.selectedLeasePayments.map(lease => (
                   <TableRow key={lease.from}>
                     <TableCell component="th" scope="row">
                       {lease.from}
                     </TableCell>
-                    <TableCell align="right">{lease.to}</TableCell>
-                    <TableCell align="right">{lease.days}</TableCell>
+                    <TableCell>{lease.to}</TableCell>
+                    <TableCell align="center">{lease.days}</TableCell>
                     <TableCell align="right">$ {lease.amount}</TableCell>
                   </TableRow>
                 ))}
