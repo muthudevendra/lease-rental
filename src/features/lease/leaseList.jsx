@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -105,9 +106,9 @@ const Lease = ({requestLease, fetchLeaseDataById, lease}) => {
                 {lease.selectedLeasePayments.map(lease => (
                   <TableRow key={lease.from}>
                     <TableCell component="th" scope="row">
-                      {lease.from}
+                      {moment(lease.from).format('MMMM, Do YYYY')}
                     </TableCell>
-                    <TableCell>{lease.to}</TableCell>
+                    <TableCell>{moment(lease.to).format('MMMM, Do YYYY')}</TableCell>
                     <TableCell align="center">{lease.days}</TableCell>
                     <TableCell align="right">$ {lease.amount}</TableCell>
                   </TableRow>
