@@ -7,8 +7,6 @@
 ### Clone the project:
 ```shell
 git clone https://github.com/muthudevendra/lease-rental.git
-cd devnet
-yarn install
 ```
 
 ### Install dependencies through yarn:
