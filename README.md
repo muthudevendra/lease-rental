@@ -28,3 +28,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ```shell
 yarn test
 ```
+
+* Used packages and version
+    react: version 16.13.1
+    redux: version 4.0.5
+    react-redux: version 7.2.0
+    redux-thunk: version 2.3.0
+    moment.js: version 2.26.0
+    react-toastify: version 6.0.5
